@@ -1,5 +1,7 @@
 # data-science-on-gcp
 
+Updating this code to modernize as of 2021/2022 best practices in GCP.
+
 Source code accompanying book:
 
 <table>
