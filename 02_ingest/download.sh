@@ -2,7 +2,7 @@
 
 # Test
 
-export YEAR=${YEAR:=2020}
+export YEAR=${YEAR:=2021}
 echo "Downloading YEAR=$YEAR..."
 
 for MONTH in `seq -w 1 12`; do
