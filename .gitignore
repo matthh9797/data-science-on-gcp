@@ -1,2 +1,4 @@
 .ipynb_checkpoints
 credentials/
+.DS_Store
+06_dataproc/.Rhistory
