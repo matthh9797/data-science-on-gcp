@@ -25,15 +25,30 @@ WINDOW_DURATION = 60 * 60
 WINDOW_EVERY = 5 * 60
 
 
-def get_data_split(col):
+def get_data_split(fl_date):
+    fl_date_str = str(fl_date)
     # Use farm fingerprint just like in BigQuery
-    x = np.abs(np.uint64(farmhash.fingerprint64(str(col))).astype('int64') % 100)
+    x = np.abs(np.uint64(farmhash.fingerprint64(fl_date_str)).astype('int64') % 100)
     if x < 60:
         data_split = 'TRAIN'
     elif x < 80:
         data_split = 'VALIDATE'
     else:
         data_split = 'TEST'
+    return data_split
+
+
+def get_data_split_2019(fl_date):
+    fl_date_str = str(fl_date)
+    if fl_date_str > '2019':
+        data_split = 'TEST'
+    else:
+        # Use farm fingerprint just like in BigQuery
+        x = np.abs(np.uint64(farmhash.fingerprint64(fl_date_str)).astype('int64') % 100)
+        if x < 95:
+            data_split = 'TRAIN'
+        else:
+            data_split = 'VALIDATE'
     return data_split
 
 
@@ -69,7 +84,7 @@ def create_features_and_label(event, for_training):
 
         if for_training:
             model_input.update({
-                'ontime': 1.0 if float(event['ARR_DELAY']) < 15 else 0,
+                'ontime': 1.0 if float(event['ARR_DELAY'] or 0) < 15 else 0,
             })
 
         # features for both training and prediction
@@ -114,7 +129,7 @@ def create_features_and_label(event, for_training):
 
 
 def compute_mean(events, col_name):
-    values = [float(event[col_name]) for event in events]
+    values = [float(event[col_name]) for event in events if col_name in event and event[col_name]]
     return float(np.mean(values)) if len(values) > 0 else None
 
 

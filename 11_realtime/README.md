@@ -36,9 +36,9 @@ If you didn't go through Chapters 2-9, the simplest way to catch up is to copy d
   ```
     python3 create_traindata.py --input bigquery --project <PROJECT> --bucket <BUCKET> --region <REGION>
   ```
-* Copy over the Ch9 model.py and train_on_vertexai.py files and make the necessary changes:
+* Copy over the Ch10 model.py and train_on_vertexai.py files and make the necessary changes:
   ```
-  python3 change_ch9_files.py
+  python3 change_ch10_files.py
   ```
 * [Optional] Train an AutoML model on the enriched dataset:
   ```
@@ -51,7 +51,7 @@ If you didn't go through Chapters 2-9, the simplest way to catch up is to copy d
       (CAST(ontime AS FLOAT64) - predicted_ontime.scores[OFFSET(0)])*
       (CAST(ontime AS FLOAT64) - predicted_ontime.scores[OFFSET(0)])
       )/COUNT(*))
-  FROM dsongcp.ch10_automl_evaluated
+  FROM dsongcp.ch11_automl_evaluated
   ```
 * Train custom ML model on the enriched dataset:
   ```
@@ -72,7 +72,7 @@ If you didn't go through Chapters 2-9, the simplest way to catch up is to copy d
     ```
    Verify the results
    ```
-   gsutil cat gs://BUCKET/flights/ch10/predictions* | head -5
+   gsutil cat gs://BUCKET/flights/ch11/predictions* | head -5
    ```
 * [Optional] Simulate real-time pipeline and check to see if predictions are being made
 
@@ -92,7 +92,7 @@ If you didn't go through Chapters 2-9, the simplest way to catch up is to copy d
   
   Ensure that the pipeline starts, check that output elements are starting to be written out, do:
    ```
-   gsutil ls gs://BUCKET/flights/ch10/predictions*
+   gsutil ls gs://BUCKET/flights/ch11/predictions*
    ```
    Make sure to go to the GCP Console and stop the Dataflow pipeline.
 
@@ -122,3 +122,4 @@ If you didn't go through Chapters 2-9, the simplest way to catch up is to copy d
    ```
    bq rm -f dsongcp.streaming_preds
    ```
+  
